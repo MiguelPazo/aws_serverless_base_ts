@@ -1,0 +1,12 @@
+{
+  "all": true,
+  "check-coverage": true,
+  "include": [
+    "src/services/*.ts"
+  ],
+  "excludeNodeModules": true,
+  "branches": 80,
+  "lines": 80,
+  "functions": 80,
+  "statements": 80
+}

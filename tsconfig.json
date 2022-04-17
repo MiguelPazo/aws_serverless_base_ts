@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "outDir": ".build",
+    "rootDir": "./",
+    "baseUrl": ".",
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "types": [
+      "@types/mocha",
+      "reflect-metadata",
+      "node"
+    ],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "noResolve": false,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ]
+    }
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".serverless"
+  ]
+}

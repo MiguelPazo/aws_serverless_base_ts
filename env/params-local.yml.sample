@@ -1,0 +1,38 @@
+app:
+  env: development
+  region: ca-central-1
+  port: 3030
+  base_url: http://localhost:3030
+  cors_allow_origin: '.*(app.com)$'
+  access_token:
+  swagger_api_url: http://localhost:3031
+  swagger_access_token:
+  provisioned_concurrency: 0
+
+databases:
+  dynamodb:
+    region:
+    access_key:
+    secret_key:
+  mongodb:
+    connector: atlas
+    host_reader:
+    host_writer:
+    username:
+    password:
+    database:
+  mysql:
+    host_reader:
+    host_writer:
+    username:
+    password:
+    database:
+  redis:
+    host_reader:
+    host_writer:
+    password:
+
+sqs:
+  region:
+  access_key:
+  secret_key:

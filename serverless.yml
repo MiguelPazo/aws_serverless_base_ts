@@ -1,0 +1,82 @@
+service: webservice-base-ts
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20200924
+  memorySize: 128
+  timeout: 5
+  profile: demo_sls
+  region: ${file(./env/params-${self:custom.stage}.yml):app.region}
+  vpc: ${file(./env/params-${self:custom.stage}.yml):vpc}
+  environment:
+    NODE_ENV: 'production'
+    APP_ENV: ${file(./env/params-${self:custom.stage}.yml):app.env}
+    BASE_URL: ${file(./env/params-${self:custom.stage}.yml):app.base_url}
+    CORS_ALLOW_ORIGIN: ${file(./env/params-${self:custom.stage}.yml):app.cors_allow_origin}
+    RECAPTCHA_SECRET: ${file(./env/params-${self:custom.stage}.yml):app.recaptcha_secret}
+    APP_ACCESS_TOKEN: ${file(./env/params-${self:custom.stage}.yml):app.access_token}
+    SWAGGER_API_URL: ${file(./env/params-${self:custom.stage}.yml):app.swagger_api_url}
+    SWAGGER_ACCESS_TOKEN: ${file(./env/params-${self:custom.stage}.yml):app.swagger_access_token}
+    DYNAMODB_REGION: ${file(./env/params-${self:custom.stage}.yml):databases.dynamodb.region}
+    DYNAMODB_ACCESS_KEY: ${file(./env/params-${self:custom.stage}.yml):databases.dynamodb.access_key}
+    DYNAMODB_SECRET_KEY: ${file(./env/params-${self:custom.stage}.yml):databases.dynamodb.secret_key}
+    MONGODB_CONNECTOR: ${file(./env/params-${self:custom.stage}.yml):databases.mongodb.connector}
+    MONGODB_HOST_READER: ${file(./env/params-${self:custom.stage}.yml):databases.mongodb.host_reader}
+    MONGODB_HOST_WRITER: ${file(./env/params-${self:custom.stage}.yml):databases.mongodb.host_writer}
+    MONGODB_USERNAME: ${file(./env/params-${self:custom.stage}.yml):databases.mongodb.username}
+    MONGODB_PASSWORD: ${file(./env/params-${self:custom.stage}.yml):databases.mongodb.password}
+    MONGODB_DATABASE: ${file(./env/params-${self:custom.stage}.yml):databases.mongodb.database}
+    MYSQL_HOST_READER: ${file(./env/params-${self:custom.stage}.yml):databases.mysql.host_reader}
+    MYSQL_HOST_WRITER: ${file(./env/params-${self:custom.stage}.yml):databases.mysql.host_writer}
+    MYSQL_USERNAME: ${file(./env/params-${self:custom.stage}.yml):databases.mysql.username}
+    MYSQL_PASSWORD: ${file(./env/params-${self:custom.stage}.yml):databases.mysql.password}
+    MYSQL_DATABASE: ${file(./env/params-${self:custom.stage}.yml):databases.mysql.database}
+    REDIS_HOST_READER: ${file(./env/params-${self:custom.stage}.yml):databases.redis.host_reader}
+    REDIS_HOST_WRITER: ${file(./env/params-${self:custom.stage}.yml):databases.redis.host_writer}
+    REDIS_PASSWORD: ${file(./env/params-${self:custom.stage}.yml):databases.redis.password}
+    SQS_REGION: ${file(./env/params-${self:custom.stage}.yml):sqs.region}
+    SQS_ACCESS_KEY: ${file(./env/params-${self:custom.stage}.yml):sqs.access_key}
+    SQS_SECRET_KEY: ${file(./env/params-${self:custom.stage}.yml):sqs.secret_key}
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  serverless-offline:
+    httpPort: ${file(./env/params-${self:custom.stage}.yml):app.port}
+    prefix: ""
+    noPrependStageInUrl: true
+  domains: ${file(./env/params-${self:custom.stage}.yml):domains}
+  certificates: ${file(./env/params-${self:custom.stage}.yml):certificates}
+  customDomain: ${file(./env/params-${self:custom.stage}.yml):customDomain}
+
+functions:
+  health:
+    handler: app.handler
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+
+  auth:
+    provisionedConcurrency: ${file(./env/params-${self:custom.stage}.yml):app.provisioned_concurrency}
+    handler: app.handler
+    events:
+      - http:
+          path: /auth
+          method: post
+          cors: true
+
+  user:
+    handler: app.handler
+    events:
+      - http:
+          path: /user
+          method: get
+          cors: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-domain-manager

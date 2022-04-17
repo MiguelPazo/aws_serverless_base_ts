@@ -1,0 +1,40 @@
+'use strict';
+
+process.env.NODE_ENV = 'local';
+process.env.APP_ENV = 'local';
+process.env.NODE_PORT = '3030';
+process.env.BASE_URL = 'http://localhost:3030';
+process.env.CORS_ALLOW_ORIGIN = '.*(app.com)$';
+process.env.APP_ACCESS_TOKEN = '';
+process.env.SWAGGER_API_URL = 'http://localhost:3031';
+process.env.SWAGGER_ACCESS_TOKEN = '';
+process.env.DYNAMODB_REGION = '';
+process.env.DYNAMODB_ACCESS_KEY = '';
+process.env.DYNAMODB_SECRET_KEY = '';
+process.env.MONGODB_CONNECTOR = 'atlas';
+process.env.MONGODB_HOST_READER = '';
+process.env.MONGODB_HOST_WRITER = '';
+process.env.MONGODB_USERNAME = '';
+process.env.MONGODB_PASSWORD = '';
+process.env.MONGODB_DATABASE = '';
+process.env.MYSQL_HOST_READER = '';
+process.env.MYSQL_HOST_WRITER = '';
+process.env.MYSQL_USERNAME = '';
+process.env.MYSQL_PASSWORD = '';
+process.env.MYSQL_DATABASE = '';
+process.env.REDIS_HOST_READER = '127.0.0.1';
+process.env.REDIS_HOST_WRITER = '127.0.0.1';
+process.env.REDIS_PASSWORD = '';
+process.env.SQS_REGION = '';
+process.env.SQS_ACCESS_KEY = '';
+process.env.SQS_SECRET_KEY = '';
+
+
+module.exports = {
+    timeout: false,
+    require: [
+        "ts-node/register",
+        "tests/_genericBefore.ts"
+    ],
+    exit: true
+};
